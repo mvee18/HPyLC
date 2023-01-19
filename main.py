@@ -80,10 +80,12 @@ def main():
     check_dir(input_dir)
     check_dir(output_dir)
 
-    # Now, we list the .txt files in the input directory.
-    files = os.listdir(input_dir)
-    txt_files = [os.path.join(input_dir, f)
-                 for f in files if f.endswith('.txt')]
+    txt_files = []
+    # Now, we list the .txt files in the input directory and walk down.
+    for root, dirs, files in os.walk(input_dir):
+        for file in files:
+            if file == "Report.TXT":
+                txt_files.append(os.path.join(root, file))
 
     # Now, open each file.
     for c, t in enumerate(txt_files):
@@ -96,7 +98,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # test_file = "example_input/sample.txt"
-    # d = parse_file(test_file)
-    # write_data(d[1], ".", d[0])
     main()
